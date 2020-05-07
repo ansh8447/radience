@@ -1,0 +1,6 @@
+﻿g_id,g_kv,g_unit_id,g_status,g_ctrl,g_mw_measured,g_rating
+DG1,4.16,G3_ORC,0,AGC,1.5,220
+DG2,0.5,G4_ORC,1,AGC,2.5,220
+DG3,0.8,G5_ORC,1,AGC,3.5,330
+DG4,1.54,G3_ORC,0,AGC,4.5,220
+DG5,3.22,G4_ORC,0,AGC,5.5,330

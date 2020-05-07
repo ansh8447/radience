@@ -1,0 +1,7 @@
+﻿l_id,l_kv,l_unit_id,l_status,l_type,l_mw_measured,l_mvar_measured
+L01,12,L01_LAK,1,CL,0.1,0.01
+L02,30,L02_LAK,1,NCL,0.2,0.02
+L03,40,L03_LAK,1,CL,0.3,0.03
+L04,15,L04_LAK,1,NCL,0.4,0.04
+L05,20,L05_LAK,1,NCL,0.5,0.05
+L06,30,L06_LAK,1,CL,0.6,0.06

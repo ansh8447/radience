@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+.body{
+   background-color: azure ;
+   font-size: smaller;
+}
+
+.container-fluid {
+   padding: 0px;
+}
+
+.navbar {
+   min-height: 10px;
+ }
+
+.mainnavbar{
+   /* background: darkblue; */
+   /* color: white;  */
+   font-weight: lighter; 
+   /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', 'Arial', 'sans-serif'; */
+   font-family: 'Roboto', sans-serif;
+   min-height: 10px;
+   margin: 0px;
+   font-size: smaller;
+}
+
+.nav > .active {
+   /* color: aqua; */
+   /* background-color: blue; */
+   /* border-color: blue; */
+   color: blue !important;    
+ }
+ /* .nav-item > a:hover {
+   color: aqua;
+ } */
+
+/* 
+ .nav-tabs .nav-link {
+   border: 1px solid #000000;
+   border-top-left-radius: 0.25rem;
+   border-top-right-radius: 0.25rem;
+} */
+
+ .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    /* background-color: rgb(0, 0, 0) !important; */
+    /* border-color: black !important; */
+    /* color: white !important; */
+    border-bottom: 10px !important;
+    border-left: 10px !important;
+    border-right: 10px !important;
+    border-top: 10px !important;
+    color: rgb(255, 255, 255) !important;
+    border-color: rgb(37, 37, 116), rgb(37, 37, 116) !important;
+    background-color: rgb(37, 37, 116) !important;
+
+ }
+
+ .nav-tabs .nav-link{
+    background-color: #e7e8e9 ;
+    color: rgb(37, 37, 116) !important;
+      
+    border: 1px solid #6c757d;
+    /* border-top-left-radius: 0.90rem;
+    border-top-right-radius: 0.90rem;
+    border-bottom-left-radius: 0.90rem;
+    border-bottom-right-radius: 0.90rem; */ 
+    font-weight: bold;
+    margin-right: 2.5px;
+    margin-top: 5px;
+    margin-left: 2.5px;
+ }
+
+ .nav-tabs{
+   border: none !important;
+ }
+ 
+ .a {
+   color: #9d9e9f !important;
+}
+
+ .page-item.active
+ .page-link {
+    background-color: rgb(37, 37, 116) !important;
+ }
+
+ .table .thead-light th {
+    background-color: rgb(37, 37, 116) !important;
+    color: white !important;
+ }
+
+.tooltitle{
+   background-color: rgb(37, 37, 116) !important;
+   color: rgb(221, 211, 211);
+   padding-top: 10px;
+   font-family: 'Roboto', sans-serif; 
+   /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+ }
+      
+      div.card {
+         /* width: 250px; */
+         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+         background: #f9f9f9;
+         padding: 20px 20px;
+         /* text-align: center; */
+      }
+
+      div.card2 {
+         /* width: 250px; */
+         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+         background: #f9f9f9;
+         /* padding: 20px 20px; */
+         /* text-align: center; */
+      }
+
+      /* .nav-item {
+         
+      } */
+
+      .differentTable,
+      .differentTable td {
+         border-color: black;
+      }
+
+      #mapid {
+         height: 530px;
+      }
+
+      #mapid2 {
+         height: 480px;
+      }
+
+      #decision-mapid {
+         height: 200px;
+      }
+
+      #decision-pre-barchart {
+         height: 480px;
+         width: 100%;
+      }
+
+      #planning-pre-map {
+         height: 480px;
+      }
+
+      #planning-during-mapid {
+         height: 480px;
+      }
+
+      #nodes_map {
+         height: 500px;
+      }
+
+      #generating_units_map {
+         height: 470px;
+      }
+
+      #loads_map {
+         height: 500px;
+      }
+
+      .pulse {
+         animation: pulsate 1s ease-out;
+         -webkit-animation: pulsate 1s ease-out;
+         -webkit-animation-iteration-count: infinite; 
+         animation-delay: 5s;
+         opacity: 0.0; 
+     }
+     
+     
+     @keyframes pulsate {
+         0% {transform: opacity=0.0;}
+         50% {opacity: 1.0;}
+         100% {transform: opacity=0.0;}
+     }
+
+     .scrollable{
+        height: 400px;
+        overflow: scroll;
+     }
+
+     /* .chartWrapper {
+      position: relative;
+      
+  }
+
+  .chartWrapper > canvas {
+      position: absolute;
+      left: 0;
+      top: 0;
+      pointer-events:none;
+  }
+.chartAreaWrapper {
+    overflow-x: scroll;
+      position: relative;
+      width: 100%;
+  }
+
+  .chartAreaWrapper2 {
+    
+      position: relative;
+      height: 300px;
+      width: 300px;
+  } */

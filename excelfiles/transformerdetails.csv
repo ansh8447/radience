@@ -1,0 +1,6 @@
+﻿trans_id,trans_rating,trans_loc,trans_op_condition
+TRANS1,200,ORCA,80
+TRANS2,50,PCS,30
+TRANS3,100,HBC,20
+TRANS4,300,ORCA,80
+TRANS5,100,HBC,20

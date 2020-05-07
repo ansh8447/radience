@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="x-ua-compatible" content="ie=edge">
+   <title>Real Time Resiliency Management Tool</title>
+   <meta name="description" content="">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+   <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+   
+   <!-- main CSS
+      ============================================ -->
+   <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/radience.css') }}" />
+   <!-- <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css') }}" /> -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" />
+   <!-- modernizr JS
+      ============================================ -->
+   <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+   <!-- <script type="text/javascript" src="{{ url_for('static', filename='js/vendor/modernizr-2.8.3.min.js') }}"></script> -->
+
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
+
+   <!-- For Charts -->
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js"></script>
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@1.8.0"></script>
+
+   <!-- leaflet Links and scripts -->
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+      crossorigin="" />
+   <script type="text/javascript" src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+      integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+      crossorigin="">
+      </script>
+
+      <!-- DataTables-->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">  
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+
+   <!-- Heatmap JS-->
+   <!-- <script type="text/javascript"
+      src="{{ url_for('static', filename='js/heatmap.js-2.0.5/build/heatmap.js') }}"></script>
+   <script type="text/javascript" src="{{ url_for('static', filename='js/leaflet-heatmap.js') }}"></script> -->
+
+   <!-- leaflet-heat -->
+   <script type="text/javascript"
+      src="{{ url_for('static', filename='js/Leaflet.heat-gh-pages/dist/leaflet-heat.js') }}"></script>
+</head>
+
+   <div class="container-fluid">
+      <div class="row tooltitle justify-content-center">
+          <h2 style=" color: white; font-weight: bolder; "> REAL-TIME RESILIENCY MANAGEMENT
+            SYSTEM (CEC ALASKA)</h2>
+      </div>
+  </div>
+
+   <!-- Modal -->
+   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title text-center" id="exampleModalLabel">WARNING</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="alert alert-danger" role="alert">
+               <div class="modal-body text-center">
+                  A threat has been detected. Check under Resiliency Monitoring And Decision Support.
+               </div>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+
+
+   <!-- mg-tb-40 -->
+   <!-- <div class="Menu_top"> -->
+      <div class="container-fluid p-0">
+         <!-- <div class="row"> -->
+            <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> -->
+               <!-- Main Buttons -->
+               <ul class="mainnavbar nav nav-tabs nav-fill ">
+                  <li class="nav-item "><a class="nav-link " data-toggle="tab" href="#system-info">System Information</a></li>
+                  <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#Real-Time">Resiliency Monitoring</a></li>
+                  <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#decision">Decision Support</a></li>
+                  <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#planning">Planning and Analysis</a>
+                  </li>
+               </ul>
+
+               <div class="tab-content custom-menu-content">
+                  <!-- System Info Buttons -->
+                  <div id="system-info" class="tab-pane">
+                        <!-- <div class="container-fluid"> -->
+                           <ul class="mainnavbar nav nav-tabs">
+                              <li class="active"><a class="nav-link  " data-toggle="tab" href="#infra">Infrastructure</a></li>
+                              <li class="nav-item"><a class="nav-link  " data-toggle="tab" href="#netdetails">Network Details</a></li>
+                              <li class="nav-item"><a class="nav-link  " data-toggle="tab" href="#generatingunits">Generating Units</a></li>
+                              <li class="nav-item"><a class="nav-link  " data-toggle="tab" href="#loads">Loads</a></li>
+                           </ul>
+                           <!-- Display in each tab -->
+                           <div class="tab-content">
+                              <div id="infra" class="tab-pane fade in active">
+                                 <div class="container-fluid" style="margin-top: 20px;">
+                                    <div class="row">
+                                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                          <h3 style="text-align: center;">System Information</h3>
+                                          <div class="card2">
+                                             <table class="table table-borderless">
+                                                <tbody>
+                                                   <tr>
+                                                      <td>Number of PMU</td>
+                                                      <td id="pmu">5</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>Number of isolators</td>
+                                                      <td id="iso">20</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>Number of substations</td>
+                                                      <td id="sub">4</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>Number of smart meters</td>
+                                                      <td id="smart">50</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>Total Number of feeders</td>
+                                                      <td id="feeder">25</td>
+                                                   </tr>
+                                                   <tr>
+                                                      <td>Total Number of oil switches</td>
+                                                      <td id="oil">10</td>
+                                                   </tr>
+                                                </tbody>
+                                             </table>
+                                          </div>
+                                       </div>
+                                       <!-- <div class="row"> -->
+                                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                          <h3 style="text-align: center;">Update System Information</h3>
+                                          <div class="card">
+                                             <form>
+                                                <div class="form-group">
+                                                   <label for="networktopology">Upload File (Supported Format:
+                                                      xlsx)</label>
+                                                   <input type="file" class="form-control-file" id="networktopology">
+                                                </div>
+
+                                             </form>
+                                          </div>
+                                       </div>
+                                       <!-- </div> -->
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <!-- Network Tab -->
+                              <div id="netdetails" class="tab-pane fade">
+                                 <div class="container-fluid" style="margin-top: 20px; ">
+                                    <!-- CB Details Table-->
+                                    <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                       <!-- <div class="row"> -->
+                                          <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> -->
+                                             <h3 style="text-align: center; padding-top: 15px;">CB Details</h3>
+                                             <div class="card2" style="height: 225px;">
+                                                <table id="cbdetails" class="table table-sm display compact" style="width:100%">
+                                                   <thead class="thead-light">
+                                                      <tr>
+                                                         <th class="th-sm">CB ID</th>
+                                                         <th class="th-sm">Location</th>
+                                                         <th class="th-sm">Status</th>
+                                                      </tr>
+                                                   </thead>
+                                                   <tbody>
+                                                      
+                                                   </tbody>
+                                                </table>
+                                             </div>
+                                          <!-- </div> -->
+                                          <!-- </div> -->
+
+                                          <!-- Node Connection Table -->
+                                          <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> -->
+                                             <!-- <div class="row"> -->
+                                             <h3 style="text-align: center; padding-top: 15px;">Substation Details</h3>
+                                             <div class="card2">
+                                                <table id="subtable" class="table table-sm display compact" style="width:100%"> 
+                                                   <thead class="thead-light">
+                                                      <tr>
+                                                         <th>Sub. ID</th>
+                                                         <th>Location</th>
+                                                         <th>Outgoing Feeders</th>
+                                                         <th>Remarks</th>
+                                                      </tr>
+                                                   </thead>
+                                                   <tbody>
+                                                      <tr>
+                                                         <td>Sub1</td>
+                                                         <td>ORCA</td>
+                                                         <td>AUX Cannery</td>
+                                                         <td></td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Sub2</td>
+                                                         <td>EYAK</td>
+                                                         <td>Main Town</td>
+                                                         <td></td>
+                                                      </tr>
+                                                   </tbody>
+                                                </table>
+                                             </div>
+                                          <!-- </div> -->
+                                       <!-- </div> -->
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                       <!-- Transformer Details -->
+                                       <!-- <div class="row"> -->
+                                          <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> -->
+                                             <!-- <div class="row"> -->
+                                             <h3 style="text-align: center; padding-top: 15px;">Transformer Details</h3>
+                                             <div class="card2">
+                                                <table id="transformerTable" class="table table-sm display compact" style="width:100%">
+                                                   <thead class="thead-light">
+                                                      <th>T. ID</th>
+                                                      <th>Rating</th>
+                                                      <th>Location</th>
+                                                      <th>Operating Conditions</th>
+                                                   </thead>
+                                                   <tbody>
+                                                      
+                                                   </tbody>
+                                                </table>
+                                             </div>
+                                          <!-- </div> -->
+                                       <!-- </div> -->
+                                       <!-- Update File -->
+                                       <!-- <div class="row"> -->
+                                          <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> -->
+                                             <h3 style="text-align: center; padding-top: 15px;">Update Information</h3>
+                                             <div class="card">
+                                                <form>
+                                                   <div class="form-group">
+                                                      <label for="networktopology">Upload CB Details (Supported
+                                                         Format:
+                                                         xlsx)</label>
+                                                      <input type="file" class="form-control-file" id="networktopology">
+                                                   </div>
+                                                </form>
+                                                <form>
+                                                </br>
+                                                   <div class="form-group">
+                                                      <label for="networktopology">Upload Transformer Details
+                                                         (Supported
+                                                         Format:
+                                                         xlsx)</label>
+                                                      <input type="file" class="form-control-file" id="networktopology">
+                                                   </div>
+                                                </form>
+                                                <!-- <form>
+                                                   <div class="form-group">
+                                                      <label for="networktopology">Upload New Substation Details (Supported
+                                                         Format:
+                                                         xlsx)</label>
+                                                      <input type="file" class="form-control-file" id="networktopology">
+                                                   </div>
+                                                </form> -->
+                                             </div>
+                                          <!-- </div> -->
+                                       <!-- </div> -->
+                                    </div>
+                                    <!-- </div> -->
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                       <h3 style="text-align: center; padding-top: 15px;">Nodes Map</h3>
+                                       <div class="card2">
+                                          <div id="nodes_map"></div>
+                                       </div>
+                                    </div>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <!-- Generating Units Tab -->
+                              <div id="generatingunits" class="tab-pane fade">
+                                 <div class="container-fluid">
+                                    <div class=" row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                       <h3 style="text-align: center; padding-top: 15px;">Generating Units</h3>
+                                       <div class="card2">
+
+                                          <!-- <h3 style=" text-align: center;">Node Connection</h3> -->
+                                          <table id="gutable" class="table table-bordered table-sm" style="width: 100%;">
+                                             <thead class="thead-light">
+                                                <tr>
+                                                   <th>Generator</th>
+                                                   <th>KV</th>
+                                                   <th>Unit ID</th>
+                                                   <th>Status</th>
+                                                   <th>Control</th>
+                                                   <th>MW Measured</th>
+                                                   <th>Rating</th>
+                                                </tr>
+                                             </thead>
+                                             <tbody>
+                                             </tbody>
+                                          </table>
+                                       </div>
+                                       <h3 style="text-align: center;">Update Generating Units</h3>
+                                       <div class="card">
+                                          <form>
+                                             <div class="form-group">
+                                                <label for="networktopology">Upload New File (Supported Format:
+                                                   xlsx)</label>
+                                                <input type="file" class="form-control-file" id="networktopology">
+                                             </div>
+
+                                          </form>
+                                       </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                       <h3 style="text-align: center; padding-top: 15px;">Generating Units Map</h3>
+                                       <div class="card2">
+                                          <div id="generating_units_map"></div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+
+                           <!-- Loads Tab -->
+                           <div id="loads" class="tab-pane fade">
+                              <div class="container-fluid">
+                                 <div class="row">
+                                 <div class=" col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                 <h3 style="text-align: center; padding-top: 15px;">Feeder/Loads</h3>
+                                 <div class="card2">
+                                    <table id="loadstable" class="table table-bordered table-sm" style="width: 100%;">
+                                       <thead class="thead-light">
+                                          <tr>
+                                             <th>Load</th>
+                                             <th>KV</th>
+                                             <th>Unit ID</th>
+                                             <th>Status</th>
+                                             <th>Type</th>
+                                             <th>MW Measured</th>
+                                             <th>MVAR Measured</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                                 <h3 style="text-align: center;">Update Feeder/Loads</h3>
+                                 <div class="card">
+                                    <form>
+                                       <div class="form-group">
+                                          <label for="networktopology">Upload New File (Supported Format:
+                                             xlsx)</label>
+                                          <input type="file" class="form-control-file" id="networktopology">
+                                       </div>
+
+                                    </form>
+                                 </div>
+                              </div>
+
+                              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                 <h3 style="text-align: center; padding-top: 15px;">Feeder/Loads Map</h3>
+                                 <div class="card2">
+                                    <div id="loads_map"></div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  </div>
+
+
+                  <!-- Resiliency Monitoring Buttons -->
+                  <div id="Real-Time" class="tab-pane">
+                     <ul class="mainnavbar nav nav-tabs">
+                        <li class="nav-item active"><a class="nav-link  " data-toggle="tab" href="#runtimescore">Run-time Resiliency Score</a></li>
+                        <li class="nav-item"><a class="nav-link  " data-toggle="tab" href="#threatimpact2">Threat and Impact</a></li>
+                        <li class="nav-item"><a class="nav-link  " data-toggle="tab" href="#history">Resiliency History</a></li>
+                     </ul>
+                     <div class="tab-content">
+                        <!-- runtime Score -->
+                        <div id="runtimescore" class="tab-pane fade in active">
+                           <div class="container-fluid">
+                              <div class="row">
+                              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                 
+                                    <h3 style="text-align: center; padding-top: 10px;">Resiliency Readings</h3>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                       <div class="card">
+                                          <canvas id="myChart" height="100%"></canvas>
+                                       </div>
+                                    
+                                    <div class="card" style="margin-top: 10px;">
+                                          <canvas id="myChart2" height="100%" ></canvas>
+                                    </div>
+                                 </div>
+                              </div>
+
+                              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                 <!-- <div class="row"> -->
+                                    <h3 style="text-align: center; padding-top: 10px;">Live Map</h3>
+                                    <!-- <img src="images/column-2.jpg" class="img-fluid"> -->
+                                    <div class="card2">
+                                       <div id="mapid" height="100%"></div>
+                                    </div>
+                                 <!-- </div> -->
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                        <!-- Threat and impact tab -->
+                        <div id="threatimpact2" class="tab-pane fade">
+                           <div class="container-fluid">
+                              <div class="row">
+                              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                 <!-- <div class="row"> -->
+                                    <h3 style="text-align: center; padding-top: 15px;">Threat Information</h3>
+                                    <div class="card2">
+                                       <table class="table table-borderless table-sm">
+                                          <tr>
+                                             <td> Threat Detected </td>
+                                             <td>
+                                                <!-- <div class="btn-group">
+                                                   <button type="button" class="btn btn-default dropdown-toggle"
+                                                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                      Action <span class="caret"></span>
+                                                   </button>
+                                                   <ul class="dropdown-menu">
+                                                      <li><a href="#">Avalance</a></li>
+                                                      <li><a href="#">Tsunami</a></li>
+                                                      <li><a href="#">Tornado</a></li>
+                                                   </ul>
+                                                </div> -->
+                                                Avalanche
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td>Intensity</td>
+                                             <td>Level 1</td>
+                                          </tr>
+                                          <tr>
+                                             <td>Wind Direction</td>
+                                             <td>NE</td>
+                                          </tr>
+                                          <tr>
+                                             <td>Wind Speed</td>
+                                             <td>7 Mph</td>
+                                          </tr>
+                                       </table>
+                                    <!-- </div> -->
+                                 </div>
+                                 <!-- <div class="row"> -->
+                                    <h3 style="text-align: center">Impacts</h3>
+                                    <div class="card2">
+                                       <table class="table table-borderless table-sm">
+                                          <thead>
+                                             
+                                          </thead>
+                                          <tbody>
+                                             <tr>
+                                                <td>Voltage</td>
+                                                <td>7kV</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Frequency</td>
+                                                <td>60Hz</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Scheduled Load</td>
+                                                <td>85MW</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Scheduled Generation</td>
+                                                <td>95MW</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Present Load</td>
+                                                <td>90MW</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Present Generation</td>
+                                                <td>90MW</td>
+                                             </tr>
+                                             <!-- <tr>
+                                                <td>Generation</td>
+                                                <td>HBC</td>
+                                                <td>1.0MW</td>
+                                                <td>0.5MW</td>
+                                             </tr>
+                                             <tr>
+                                                <td>CB47</td>
+                                                <td>Creek</td>
+                                                <td>Closed</td>
+                                                <td>Open</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Total Generation</td>
+                                                <td></td>
+                                                <td>5MW</td>
+                                                <td>4.5MW</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Total Load</td>
+                                                <td></td>
+                                                <td>3.5MW</td>
+                                                <td>3MW</td>
+                                             </tr> -->
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                 </div>
+                              
+                              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                 <!-- <div class="row"> -->
+                                 <h3 style="text-align: center; padding-top: 15px;">Live Map Tracking</h3>
+                                 <div class="card2">
+                                    <div id="mapid2"></div>
+                                 </div>
+                                 <!-- </div> -->
+                              <!-- </div> -->
+                           </div>
+                        </div>
+                     </div>
+                     </div>
+                        <!-- Resiliency History -->
+                        <div id="history" class="tab-pane fade">
+                           <div class="container-fluid" style="margin-top: 20px;">
+                              <div class="row">
+                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <h3 style="text-align: center; padding-top: 15px;">Resiliency History</h3>
+                                    <div class="card2 scrollable">
+                                       <table class="table table-sm table-bordered" id="resiliency-history">
+                                          <thead class="thead-light">
+                                             <tr>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">TF</th>
+                                                <th scope="col">CLNL</th>
+                                                <th scope="col">DCL</th>
+                                                <th scope="col">RC</th>
+                                                <th scope="col">TIF</th>
+                                                <th scope="col">Resiliency</th>
+                                             </tr>
+                                          </thead>
+
+                                          <tbody>
+                                             <tr>
+                                                <td>00-00-0000 00:00</td>
+                                                <td>0.0</td>
+                                                <td>0.0</td>
+                                                <td>0.0</td>
+                                                <td>0.0</td>
+                                                <td>0.0</td>
+                                                <td>0.0</td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                       <!-- insert Bar graphs   -->
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <!-- Decision Buttons -->
+                  <div id="decision" class="tab-pane">
+                     <ul class="mainnavbar nav nav-tabs">
+                        <li class="nav-item active"><a class="nav-link" data-toggle="tab" href="#decision-pre">Pre-Event</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#decision-during">During Event</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#decision-post">Post-Event</a></li>
+                     </ul>
+                     <div class="tab-content">
+                        <!-- Decision Pre-event -->
+                        <div id="decision-pre" class="tab-pane fade in active">
+                           <div class="container-fluid">
+                              <div class="row">
+                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"> -->
+                                       <h3 style="text-align: center; ">Event Details</h3>
+                                       <div class="card2">
+                                          <table class="table table-bordered">
+                                             <tr>
+                                                <td> Event Type </td>
+                                                <td>
+                                                   Tsunami
+                                                </td>
+                                             </tr>
+                                             <tr>
+                                                <td>Coordinates</td>
+                                                <td>(60.52669, -145.742749)</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Wind Speed</td>
+                                                <td>12m/s</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Wind Direction</td>
+                                                <td>North-west</td>
+                                             </tr>
+      
+                                          </table>
+                                       </div>
+                                    <!-- </div> -->
+      
+                                    <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"> -->
+                                       <div class="card">
+                                          <canvas id="decision-pre-barchart"></canvas>
+                                       </div>
+                                    <!-- </div> -->
+
+                                 </div>
+                                 
+      
+                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                       <h3 style="text-align: center; ">Expected Outage
+                                          and Summary
+                                       </h3>
+                                       <div class="card2">
+                                          <table class="table table-bordered">
+                                             <tr>
+                                                <td> Fault Location </td>
+                                                <td> ORCA </td>
+                                             </tr>
+                                             <tr>
+                                                <td>Isolated Section Details</td>
+                                                <td>ORCA Substation)</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Wind Speed</td>
+                                                <td>12m/s</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Wind Direction</td>
+                                                <td>North-west</td>
+                                             </tr>
+                                          </table>
+                                       </div>
+
+                                       <div class="card">
+                                          <canvas id="decision-pre-linechart"></canvas>
+                                       </div>
+
+                                 </div>
+
+                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <h3 style="text-align: center; "> Live Tracking </h3>
+                                    <div class="card2" style="margin-bottom: 10px;">
+                                       <div id="decision-mapid"></div>
+                                    </div>
+
+                                    <div class="card">
+                                       <canvas id="decision-resilientmode-barchart"></canvas>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <!-- Decision During -->
+                        <div id="decision-during" class="tab-pane fade">
+                           <div class="container-fluid">
+                              <div class="row">
+                              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                 
+                                    <h3 style="text-align: center; padding-top: 15px;">During Event Graph</h3>
+                                    <div class="card">
+                                       <canvas id="decision-during-linechart"></canvas>
+                                    </div>
+                                 </div>
+                              
+                              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                 <!-- <div class="row"> -->
+                                    <h3 style="text-align: center; padding-top: 15px;">Inventory Managment</h3>
+                                    <div class="card2" style="margin-left: 15px;">
+                                       <table class="table table-bordered table-sm">
+                                          <thead class="thead-light">
+                                             <tr>
+                                                <th>Label</th>
+                                                <th>Value</th>
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+                                             <tr>
+                                                <td>Inventory Available</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Quick Recovery actions</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Operating Storage</td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                 
+                                 <!-- <div class="row"> -->
+                                    <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"> -->
+                                    <h3 style="text-align: center; padding-top: 5px;">Restoration Plan</h3>
+                                    <div class="card2" style="margin-left: 15px;">
+                                       <table class="table table-bordered">
+                                          <thead class="thead-light">
+                                             <tr>
+                                                <th>Label</th>
+                                                <th>Value</th>
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+                                             <tr>
+                                                <td>Reconfiguring the network</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Turning on backup Generators</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Restoring CL</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Resiliency after addition of Storage</td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                       <!-- </div> -->
+                                    </div>
+                                 
+                              </div>
+                           </div>
+                        </div>
+                        </div>
+
+                        <!-- Decision Post Event -->
+                        <div id="decision-post" class="tab-pane fade">
+                           <div class="container-fluid">
+                              <div class="row">
+                              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                 
+                                    <h3 style="text-align: center; padding-top: 15px;">Post Event Resiliency Score
+                                    </h3>
+                                    <div class="card">
+                                       <canvas id="decision-post-linechart"></canvas>
+                                    </div>
+                                 </div>
+                              
+                              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                 
+                                    <h3 style="text-align: center; padding-top: 15px;">Inventory
+                                       Managment</h3>
+                                    <div class="card2" style="margin-left: 15px;">
+                                       <table class="table table-bordered">
+                                          <thead class="thead-light">
+                                             <tr>
+                                                <th>Label</th>
+                                                <th>Value</th>
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+                                             <tr>
+                                                <td>Inventory Available</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Pre-planned actions</td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                 
+
+                                    <h3 style="text-align: center; padding-top: 15px;">Restoration Plan
+                                    </h3>
+                                    <div class="card2" style="margin-left: 15px;">
+                                       <table class="table table-bordered">
+                                          <thead class="thead-light">
+                                             <tr>
+                                                <th>Label</th>
+                                                <th>Value</th>
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+                                             <tr>
+                                                <td>Reconfiguring the network</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Turning on backup Generators</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Restoring CL</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Operating Storage</td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                 
+                              </div>
+                           </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                 <!-- Planning Button -->
+                  <div id="planning" class="tab-pane in notika-tab-menu-bg">
+                     <ul class="nav nav-tabs">
+                        <li class="nav-item active"><a class="nav-link" data-toggle="tab" href="#planning-pre">Pre-Event</a></li>
+                        <!-- <li><a data-toggle="tab" href="#planning-during">During Event</a></li> -->
+                        <!-- <li><a data-toggle="tab" href="#planning-post">Post-Event</a></li> -->
+                     </ul>
+                     <div class="tab-content">
+                        <!-- Planning Pre-event -->
+                        <div id="planning-pre" class="tab-pane fade in active">
+                           <div class="container-fluid">
+                              <!-- <div class="row"> -->
+                              <div class="row">
+                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <h3 style="text-align: center; padding-top: 15px;">Proactive Decision</h3>
+                                    <div class="card2">
+                                       <table class="table table-bordered">
+                                          <tbody>
+                                             <tr>
+                                                <td>Fault Location</td>
+                                                <td>HBC</td>
+                                             </tr>
+
+                                             <tr>
+                                                <td>Isolated Section details</td>
+                                                <td>HBC isolated Creek isolation</td>
+                                             </tr>
+
+                                             <tr>
+                                                <td>Inventory Available</td>
+                                                <td>10 Men, 2 Generators</td>
+                                             </tr>
+
+                                             <tr>
+                                                <td>Pre-planned actions</td>
+                                                <td>30 Men, 4 auxilary transformers</td>
+                                             </tr>
+
+                                             <tr>
+                                                <td>Addition of storage at Eyak</td>
+                                                <td></td>
+                                             </tr>
+                                          </tbody>
+
+                                       </table>
+                                    </div>
+                                 </div>
+                              
+
+                              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                 <h3 style="text-align: center; padding-top: 15px;">Map Analysis</h3>
+                                 <div class="card2">
+                                    <!-- insert Bar graphs   -->
+                                    <div id="planning-pre-map"></div>
+                                 </div>
+                              </div>
+                           </div>
+                           </div>
+                        </div>
+
+                        <!-- Planning During -->
+                        <div id="planning-during" class="tab-pane fade">
+                           <div class="container-fluid">
+                              <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                 <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                       <h3 style="text-align: center; padding-top: 15px;">Event Details
+                                       </h3>
+                                       <div style="background: #f9f9f9; ">
+                                          <table class="table table-bordered">
+                                             <tr>
+                                                <td> Event Type </td>
+                                                <td>
+                                                   <div class="btn-group">
+                                                      <button type="button" class="btn btn-default dropdown-toggle"
+                                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                         Action <span class="caret"></span>
+                                                      </button>
+                                                      <ul class="dropdown-menu">
+                                                         <li><a href="#">Avalance</a></li>
+                                                         <li><a href="#">Tsunami</a></li>
+                                                         <li><a href="#">Tornado</a></li>
+                                                         <!-- <li role="separator" class="divider"></li>
+                                                            <li><a href="#">Separated link</a></li> -->
+                                                      </ul>
+                                                   </div>
+                                                </td>
+                                             </tr>
+                                             <tr>
+                                                <td>Coordinates</td>
+                                                <td>(0.000, 0.000)</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Wind Speed</td>
+                                                <td>12m/s</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Wind Direction</td>
+                                                <td>North-west</td>
+                                             </tr>
+
+                                          </table>
+                                       </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                       <h3 style="text-align: center; padding-top: 15px;">Expected Outage
+                                          and Summary
+                                       </h3>
+                                       <div style="background: #f9f9f9; ">
+                                          <table class="table table-bordered">
+                                             <tr>
+                                                <td> Fault Location </td>
+                                                <td> OSO47 </td>
+                                             </tr>
+                                             <tr>
+                                                <td>Isolated Section Details</td>
+                                                <td>HBC isolated Creek station)</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Wind Speed</td>
+                                                <td>12m/s</td>
+                                             </tr>
+                                             <tr>
+                                                <td>Wind Direction</td>
+                                                <td>North-west</td>
+                                             </tr>
+                                          </table>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                       <div style="background: #f9f9f9; ">
+                                          <canvas id="planning-during-barchart"></canvas>
+                                       </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                       <div style="background: #f9f9f9; ">
+                                          <canvas id="planning-during-linechart"></canvas>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <!-- </div> -->
+                              </div>
+                              <!-- </div> -->
+                              <!-- <div class="row"> -->
+                              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                 <!-- insert Bar graphs   -->
+                                 <h3 style="text-align: center; padding-top: 15px;"> Live Tracking </h3>
+                                 <div style="background: #f9f9f9; ">
+                                    <div id="planning-during-mapid"></div>
+                                 </div>
+                              </div>
+                              <!-- </div> -->
+                           </div>
+                        </div>
+
+                        <!-- Planning Post Event -->
+                        <div id="planning-post" class="tab-pane fade">
+                           <div class="container-fluid" style="margin-top: 20px; background: #f9f9f9;">
+                              <div class="row">
+                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <!-- insert line chart   -->
+                                    <p> Insert Line Chart </p>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <!-- insert Bar graphs   -->
+                                    <p> Insert Bar graphs </p>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+               </div>
+      
+   <!-- </div> -->
+         </div>
+
+   <!-- main JS
+      ============================================ -->
+   
+   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+   <!-- <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
+   <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+   <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+   <script type="text/javascript" src="{{ url_for('static', filename='js/custommaps.js') }}"></script>
+   <script type="text/javascript" src="{{ url_for('static', filename='js/data-map/d3.min.js') }}"></script>
+   <script type="text/javascript" src="{{ url_for('static', filename='js/data-map/topojson.js') }}"></script>
+   <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+   <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+   
+   
+
+</body>
+
+</html>

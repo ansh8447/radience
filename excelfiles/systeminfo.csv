@@ -1,0 +1,7 @@
+﻿key_code,key_desc,key_val
+POLE,No. of poles,50
+ISOL,No. of isolators,20
+SUBS,No. of Substations,5
+SMTR,No. of Smart Meters,10
+FDRS,No. of Feeders,25
+OLSW,No. of Oil Switches,10
